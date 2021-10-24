@@ -34,13 +34,9 @@ const getSingleTask = async (req, res) => {
 const updateTask = async (req, res) => {
   try {
     const { id: id } = req.params;
-    const result = await Tasks.updateOne({
-      _id: id,
-      name: req.body.name,
-      completed: req.body.completed,
-    });
+    const result = await Tasks.findOneAndUpdate({ _id: id }, req.body);
     if (!result) {
-      res.status(404).json({ msg: "Error in updating the data" });
+      res.status(404);
     } else {
       res.status(200).json(result);
     }
